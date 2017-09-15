@@ -94,5 +94,6 @@ class Money2020spiderSpider(scrapy.Spider):
 		item["company"] = company_str
 		item["bio"] = bio_str
 		item["session"] = " ".join(session_list)
+		item["url"] = response.url
 
-		print item
+		yield item
