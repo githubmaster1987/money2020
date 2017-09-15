@@ -81,11 +81,11 @@ class Money2020spiderSpider(scrapy.Spider):
 			company_str = col2_div.xpath("a[@class='speaker-detail-company-link']/text()").extract_first().strip().encode("utf8")
 		except:
 			company_str = col2_div.xpath("div[@class='speaker-detail-company-no-link']/text()").extract_first().strip().encode("utf8")
-			
+
 		bio_str_list = col2_div.xpath("div[contains(@class, 'speaker-detail-bio')]//text()").extract()
 		bio_str = " ".join(bio_str_list).encode("utf8")
 
-		session_item_list = col1_div.xpath("//div[contains(@class, 'speaker-detail-dynamic-list-sessions')]")
+		session_item_list = col1_div.xpath(".//div[contains(@class, 'speaker-detail-dynamic-list-sessions')]")
 		session_list = []
 		for session_item in session_item_list:
 			session_item_str = session_item.xpath(".//a[@class='speaker-detail-session-information']/text()").extract_first()
