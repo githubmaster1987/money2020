@@ -10,5 +10,10 @@ import scrapy
 
 class Money2020Item(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    name = scrapy.Field()
+    title = scrapy.Field()
+    company = scrapy.Field()
+    bio = scrapy.Field()
+    session = scrapy.Field()
+    url = scrapy.Field()
+    
