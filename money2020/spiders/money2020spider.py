@@ -66,10 +66,10 @@ class Money2020spiderSpider(scrapy.Spider):
 		print "Total = ", len(href_links)
 
 		for i, href_link in enumerate(href_links):
-			href_link = "https://us.money2020.com/speakers/jay-fulcher"
+			# href_link = "https://us.money2020.com/speakers/jay-fulcher"
 			req = self.set_proxies(href_link, self.parse_detail)
 			yield req
-			return
+			# return
 
 	def parse_detail(self, response):
 		# print "**********", response.url
