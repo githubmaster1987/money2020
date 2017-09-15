@@ -65,9 +65,11 @@ class Money2020spiderSpider(scrapy.Spider):
 		
 		print "Total = ", len(href_links)
 
-		for href_link in href_links:
+		for i, href_link in enumerate(href_links):
+			href_link = "https://us.money2020.com/speakers/jay-fulcher"
 			req = self.set_proxies(href_link, self.parse_detail)
 			yield req
+			return
 
 	def parse_detail(self, response):
 		# print "**********", response.url
@@ -87,10 +89,16 @@ class Money2020spiderSpider(scrapy.Spider):
 
 		session_item_list = col1_div.xpath(".//div[contains(@class, 'speaker-detail-dynamic-list-sessions')]")
 		session_list = []
+
+		# print "Session=", len(session_item_list)
+
 		for session_item in session_item_list:
 			session_item_str = session_item.xpath(".//a[@class='speaker-detail-session-information']/text()").extract_first()
+			
 			if session_item_str != None:
 				session_list.append(session_item_str.strip().encode("utf8"))
+
+		# print session_list
 
 		item = Money2020Item()
 		item["name"] = name_str
@@ -101,3 +109,4 @@ class Money2020spiderSpider(scrapy.Spider):
 		item["url"] = response.url
 
 		yield item
+		# print item
