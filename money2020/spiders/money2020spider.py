@@ -70,14 +70,18 @@ class Money2020spiderSpider(scrapy.Spider):
 			yield req
 
 	def parse_detail(self, response):
-		print "**********", response.url
+		# print "**********", response.url
 
 		col2_div = response.xpath("//div[contains(@class, 'speaker-detail-col2')]")
 		col1_div = response.xpath("//div[contains(@class, 'speaker-detail-col1')]")
 
 		name_str = col2_div.xpath("h1/text()").extract_first().strip().encode("utf8")
 		title_str = col2_div.xpath(".//div[@class='speaker-detail-title']/text()").extract_first().strip().encode("utf8")
-		company_str = col2_div.xpath("a[@class='speaker-detail-company-link']/text()").extract_first().strip().encode("utf8")
+		try:
+			company_str = col2_div.xpath("a[@class='speaker-detail-company-link']/text()").extract_first().strip().encode("utf8")
+		except:
+			company_str = col2_div.xpath("div[@class='speaker-detail-company-no-link']/text()").extract_first().strip().encode("utf8")
+			
 		bio_str_list = col2_div.xpath("div[contains(@class, 'speaker-detail-bio')]//text()").extract()
 		bio_str = " ".join(bio_str_list).encode("utf8")
 
@@ -93,7 +97,7 @@ class Money2020spiderSpider(scrapy.Spider):
 		item["title"] = title_str
 		item["company"] = company_str
 		item["bio"] = bio_str
-		item["session"] = " ".join(session_list)
+		item["session"] = "\r\n".join(session_list)
 		item["url"] = response.url
 
 		yield item
